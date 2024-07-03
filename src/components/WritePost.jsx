@@ -106,6 +106,10 @@ export const WritePost = () => {
         .then(response => {
             console.log(response.data);
             setImgSrc(response.data.data.imageUrl)
+            setTitle(response.data.data.title)
+            setContent(response.data.data.content)
+            setContent(response.data.data.content)
+            console.log(response.data.data.userName)
         })
         .catch(error =>{
             console.error(error);
