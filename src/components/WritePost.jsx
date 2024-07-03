@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios';
 const baseUrl = 'http://localhost:8080/api' 
@@ -93,6 +93,25 @@ export const WritePost = () => {
         }
         console.log(imgFile.name);
     }
+
+    const getImg = () => {
+        axios({
+            baseURL : baseUrl,
+            url : `/post?postId=11`,
+            method : 'GET',
+            // headers: {
+            //     'Content-Type' : 'multipart/form-data',
+            // },
+        })
+        .then(response => {
+            console.log(response.data);
+            setImgSrc(response.data.data.imageUrl)
+        })
+        .catch(error =>{
+            console.error(error);
+        })
+    }
+
     const onChangeTitle = (e) => {
         setTitle(e.target.value)
         //console.log(title)
@@ -112,6 +131,7 @@ export const WritePost = () => {
         formData.append('title', title);
         formData.append('content', content);
         formData.append('postImgPath', selectedFile);
+        console.log(formData)
             
         axios({
             baseURL : baseUrl,
@@ -129,6 +149,10 @@ export const WritePost = () => {
             console.error(error);
         })
     }
+
+    useEffect(()=>{
+        getImg()
+    }, [])
 
     return (
         <Wrap>
