@@ -1,8 +1,9 @@
 import './StandardButton.css'
 
-function StandardButton({onClick ,title, backgroundColor, color, fontSize}) {
+function StandardButton({onClick ,title, titleConfirmed, backgroundColor, color, fontSize}) {
 
     let arrTitle = title.split('')
+    let arrTitleConfirmed = titleConfirmed.split('')
 
     return (
         <button onClick={onClick} style={{backgroundColor: backgroundColor, color: color, fontSize: fontSize}}>
@@ -12,9 +13,11 @@ function StandardButton({onClick ,title, backgroundColor, color, fontSize}) {
                 ))}
             </span>
             <span class="span-mother2">
-                {arrTitle.map((e)=>(
+                
+            {arrTitleConfirmed.map((e)=>(
                     <span>{e}</span>
                 ))}
+
             </span>
         </button>
 
