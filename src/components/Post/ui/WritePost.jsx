@@ -24,7 +24,7 @@ export const WritePost = () => {
     const onUploadImage = (e) => {
         const imgFile = e.target.files[0];
         if (imgFile) {
-            setSelectedFile(imgFile);
+            setArrImg([...arrImg, e]);
             const reader = new FileReader();
             reader.onload = (e) => {
                 setImgSrc(e.target.result);
@@ -114,7 +114,7 @@ export const WritePost = () => {
                                 marginTop: '40px',
 
                             }}>
-                                < StandardButton onClick={onUploadImageButtonClick} title='저장하기' backgroundColor='black' fontSize='18px' />
+                                < StandardButton onClick={onUploadImageButtonClick} title='저장하기' titleConfirmed='저장하시겠습니까?' backgroundColor='black' fontSize='18px' />
                             </div>
                         </div>
 
