@@ -1,19 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
-import axios from 'axios';
-import { baseUrl } from '../../../shared/config' 
 import noImg from '../../../assets/no_image.png'
 import { getImg, postImg } from '../api/api';
+
+import StandardInput from '../../../shared/ui/StandardInput';
+import StandardButton from '../../../shared/ui/StandardButton/StandardButton';
+import Card from '../../../shared/ui/Card/Card';
+import Slider from '../../../shared/ui/Slider/Slider';
 
 export const WritePost = () => {
     const [isInputClick, setInputClick] = useState(false);
     const inputRef = useRef(null);
-    const [imgSrc,setImgSrc] = useState('');
+    const [imgSrc, setImgSrc] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
-    const [title,setTitle] = useState();
-    const [content,setContent] = useState();
+    const [title, setTitle] = useState();
+    const [content, setContent] = useState();
+    const [arrImg, setArrImg] = useState([noImg])
 
-    const ImageClick = () =>{
+    const ImageClick = () => {
         inputRef.current.click();
     }
 
@@ -22,7 +26,7 @@ export const WritePost = () => {
         if (imgFile) {
             setSelectedFile(imgFile);
             const reader = new FileReader();
-            reader.onload = (e) =>{
+            reader.onload = (e) => {
                 setImgSrc(e.target.result);
             };
             reader.readAsDataURL(imgFile);
@@ -42,42 +46,83 @@ export const WritePost = () => {
         if (!inputRef.current) {
             return;
         }
+
         const formData = new FormData();
-        formData.append('id', 1);
-        formData.append('title', title);
-        formData.append('content', content);
-        formData.append('postImgPath', selectedFile);
+        Array.from(e).forEach(file => {
+            formData.append('id', 1);
+            formData.append('title', title);
+            formData.append('content', content);
+            formData.append('postImgPath', selectedFile);
+        });
         console.log(formData)
         postImg(formData)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getImg(setImgSrc, setTitle, setContent)
     }, [])
 
     return (
         <Wrap>
-            <StyledTitleTextarea
-                placeholder='제목을 입력해주세요'
-                onChange={onChangeTitle}
-            />
-            <StyledContentTextarea
-                placeholder='내용을 입력해주세요'
-                onChange={onChangeContent}
-            />
-            <StyledImg
-                src={imgSrc == '' ? noImg: imgSrc}
-                alt="이미지"
-            />
-            <StyledInput type='file'
-                accept='image/*'
-                ref={inputRef}
-                onChange={onUploadImage}
-            />
 
-            <button onClick={onUploadImageButtonClick}>
-                저장하기 
-            </button>
+            <h1>주랭이의 S3 테스트</h1>
+
+            <div style={{ width: '50%', height: '100%', padding: '20px 20px 20px 20px' }}>
+                <Card content={(
+
+                    <>
+
+                        {/* 제목 */}
+                        <div style={{ width: '100%', height: '100px', marginBottom: '20px' }}>
+                            <StandardInput
+                                placeholder='제목을 입력해주세요'
+                                onChange={onChangeTitle}
+                            />
+                        </div>
+
+                        {/* 한줄 소개 */}
+                        <div style={{ width: '100%', height: '10vh', marginBottom: '20px' }}>
+                            <StandardInput
+                                placeholder='한줄 소개'
+                                onChange={onChangeTitle}
+                            />
+                        </div>
+
+                        {/* 다중 이미지 슬라이더 */}
+                        <div style={{ marginLeft: '40px', marginRight: '40px', position: 'relative' }}>
+
+                            <Slider arrImg={arrImg} />
+
+                            {/* 파일 선택하기 버튼 (display: none)*/}
+                            <StyledInput type='file'
+                                accept='image/*'
+                                ref={inputRef}
+                                onChange={onUploadImage}
+                            />
+
+                        </div>
+
+                        {/* 저장하기 버튼 */}
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <div style={{
+                                width: '30%',
+                                height: '65px',
+                                marginTop: '40px',
+
+                            }}>
+                                < StandardButton onClick={onUploadImageButtonClick} title='저장하기' backgroundColor='black' fontSize='18px' />
+                            </div>
+                        </div>
+
+                    </>
+                )} />
+            </div>
+
+
         </Wrap>
     )
 }
@@ -91,27 +136,8 @@ const Wrap = styled.div`
 `;
 const StyledTitleTextarea = styled.textarea`
     font-family: 'Pretendard';
-    resize: none;
-    width: 51.1%;
+        width: 51.1%;
     height: 100%; /* 높이를 원하는 크기로 설정 */
-    padding : 1% 0 0 1%;
-    box-sizing: border-box;
-    &::placeholder {
-        font-weight: 700;
-        color: #000;
-    }
-    &:focus {
-        outline: none;
-    }
-    &:focus::placeholder{
-        color : transparent;
-    }
-
-    box-shadow: 1px 2px 8px #f3f3f3;
-    border-radius : 5px;
-    border : none;
-
-
 `;
 
 const StyledContentTextarea = styled.textarea`
@@ -136,14 +162,15 @@ const StyledContentTextarea = styled.textarea`
 `;
 
 const StyledInput = styled.input`
-
+position: absolute;
+top: 300px;
+left: 100px;
+visibility: hidden;
 `;
 
 const StyledImg = styled.img`
-    position : absolute;
-    //display : none;
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     cursor: 'pointer';
 
