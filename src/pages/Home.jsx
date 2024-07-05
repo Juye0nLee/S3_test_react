@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import noImg from '../assets/no_image.png'
+
 const baseUrl = 'http://localhost:8080/api' 
 
 const ImgStyled = styled.img`
@@ -67,8 +69,8 @@ function Home() {
                 onChange={onUploadImage}
                 style={{display : 'none'}}
             />
-            <ImgStyled
-                src={imgSrc}
+            l<ImgStyled
+                src={imgSrc ?? noImg}
                 alt="이미지"
                 onClick={ImageClick}
             />
