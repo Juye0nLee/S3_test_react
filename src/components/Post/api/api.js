@@ -26,9 +26,9 @@ export const getImg = (setImgSrc, setTitle, setContent) => {
         method : 'GET',
     })
     .then(response => {
-        setImgSrc(response.data.data.imageUrl)
-        setTitle(response.data.data.title)
-        setContent(response.data.data.content)
+        setImgSrc(response.data.imageUrl)
+        setTitle(response.data.title)
+        setContent(response.data.content)
     })
     .catch(error =>{
         console.error(error);
