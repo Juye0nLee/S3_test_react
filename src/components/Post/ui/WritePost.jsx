@@ -59,7 +59,7 @@ export const WritePost = () => {
     }
 
     useEffect(() => {
-        getImg(setImgSrc, setTitle, setContent)
+        getImg(setArrImg, setTitle, setContent)
     }, [])
 
     return (

@@ -19,14 +19,14 @@ export const postImg = (formData)=>{
     })
 }
 
-export const getImg = (setImgSrc, setTitle, setContent) => {
+export const getImg = (setArrImg, setTitle, setContent) => {
     axios({
         baseURL : baseUrl,
         url : `/post?postId=11`,
         method : 'GET',
     })
     .then(response => {
-        setImgSrc(response.data.imageUrl)
+        setArrImg(response.data.imageUrl)
         setTitle(response.data.title)
         setContent(response.data.content)
     })
