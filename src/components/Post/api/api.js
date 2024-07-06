@@ -22,7 +22,7 @@ export const postImg = (formData)=>{
 export const getImg = (setImgSrc, setTitle, setContent) => {
     axios({
         baseURL : baseUrl,
-        url : `/post?postId=11`,
+        url : `/post?postId=1`,
         method : 'GET',
     })
     .then(response => {
