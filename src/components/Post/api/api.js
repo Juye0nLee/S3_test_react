@@ -19,16 +19,18 @@ export const postImg = (formData)=>{
     })
 }
 
-export const getImg = (setImgSrc, setTitle, setContent) => {
+export const getImg = (setArrImg, setTitle, setContent) => {
     axios({
         baseURL : baseUrl,
-        url : `/post?postId=1`,
+        url : `/post?postId=7`,
         method : 'GET',
     })
     .then(response => {
-        setImgSrc(response.data.imageUrl)
-        setTitle(response.data.title)
-        setContent(response.data.content)
+        setArrImg(response.data.data.imageUrl)
+        setTitle(response.data.data.title)
+        setContent(response.data.data.content)
+        console.log(response.data)
+        
     })
     .catch(error =>{
         console.error(error);
